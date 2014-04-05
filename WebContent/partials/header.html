@@ -1,0 +1,54 @@
+<div class="navbar navbar-default navbar-fixed-top" data-role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">AppStore</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li data-ng-class="{ active: isActive('/products') }"><a href="#products">Aplicações</a></li>
+                <li data-ng-class="{ active: isActive('/cart') }"><a href="#cart">Carrinho</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <table>
+                        <tr><td>Busca: </td><td><input type="text" placeholder="Nome, Descrição" data-ng-model="session.query"/></td></tr>
+                        <tr><td>Ordena por: </td>
+                        <td>
+                            <select data-ng-model="session.order_prop">
+                                <option value="name">Nome</option>
+                                <option value="price">Preço</option>
+                                <option value="size">Tamanho</option>
+                                <option value="system">Sistema Operacional</option>
+                                <option value="type">Plataforma</option>
+                                <option value="age">Classificação</option>
+                            </select>
+                        </td></tr>
+                    </table>
+                </li>
+                <li>
+                    <div data-ng-switch="!!session.user">
+                        <div data-ng-switch-when="true">
+                            <div class="dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <div class="glyphicon glyphicon-user"></div> {{ session.user.username }} <div class="caret"></div>
+                                </div>
+                                <ul data-ng-controller="AccountController" class="dropdown-menu">
+                                    <li><a href="#account/edit">Alterar conta</a></li>
+                                    <li><a href="#" data-confirm-directive="Quer realmente sair?" data-confirmed-onclick="logout()">Sair</a></li>
+                                </ul>
+                            </div>
+                            <a href="#cart" class="glyphicon glyphicon-shopping-cart">
+                                Itens: <b class="badge">{{ session.cart.getNumOfProducts() }}</b><br/>
+                                Valor total: <b class="badge">{{ session.cart.getTotalPrice() | currency }}</b>
+                            </a>
+                        </div>
+                        <div class="login_header_box" data-ng-switch-default="">
+                            <div><a href="#account/login" class="glyphicon glyphicon-log-in"> Entrar</a></div>
+                            <div><a href="#account/register" class="glyphicon glyphicon-log-in"> Registrar-se</a></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
