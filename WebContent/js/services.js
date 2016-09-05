@@ -127,7 +127,7 @@ angularServices.factory("OnibusService", [
         function OnibusServiceObject()
         {
             var self = this;
-            self.proxy = "http://jsonp.jit.su/?callback=?&url=";
+            self.proxy = "http://jsonp.afeld.me/?url=";
             self.url = "http://dadosabertos.rio.rj.gov.br/apiTransporte/apresentacao/rest/index.cfm/obterTodasPosicoes";
 
             self.getAll = function(fn_success, fn_error)
@@ -137,7 +137,7 @@ angularServices.factory("OnibusService", [
                      mode: "GET",
                      dataType: "jsonp",
                      cache: true,
-                     timeout: 15000
+                     timeout: 30000
                 }).
                 success(function(data, textStatus, jqXHR)
                 {
@@ -164,9 +164,9 @@ angularServices.factory("OnibusService", [
                         fn_error(data);
                     }
                 }).
-                error(function(jqXHR,  textStatus, errorThrown)
+                error(function(jqXHR, textStatus, errorThrown)
                 {
-                    fn_error("AJAX ERROR:\n" + jqXHR + "\nstatus: " + textStatus + "\nresponse: " + angular.toJson(errorThrown, true));
+                    fn_error("AJAX ERROR:\n" + JSON.stringify(jqXHR, null, 4) + "\nstatus: " + JSON.stringify(textStatus, null, 4) + "\nresponse: " + angular.toJson(errorThrown, true));
                 });
             };
         }
@@ -185,16 +185,17 @@ angularServices.factory("GeoIPService", [
         function GeoIPServiceObject()
         {
             var self = this;
-            self.url = "http://www.telize.com/geoip?callback=?";
+            self.proxy = "http://jsonp.afeld.me/?url=";
+            self.url = "https://ipapi.co/json/";
 
             self.get = function(fn_success, fn_error)
             {
                 jQuery.ajax({
-                     url: self.url,
+                     url: self.proxy + self.url,
                      mode: "GET",
                      dataType: "jsonp",
                      cache: false,
-                     timeout: 15000
+                     timeout: 30000
                 }).
                 success(function(data, textStatus, jqXHR)
                 {
@@ -217,9 +218,9 @@ angularServices.factory("GeoIPService", [
                         fn_error(data);
                     }
                 }).
-                error(function(jqXHR,  textStatus, errorThrown)
+                error(function(jqXHR, textStatus, errorThrown)
                 {
-                    fn_error("AJAX ERROR:\n" + jqXHR + "\nstatus: " + textStatus + "\nresponse: " + angular.toJson(errorThrown, true));
+                    fn_error("AJAX ERROR:\n" + JSON.stringify(jqXHR, null, 4) + "\nstatus: " + JSON.stringify(textStatus, null, 4) + "\nresponse: " + angular.toJson(errorThrown, true));
                 });
             };
         }
